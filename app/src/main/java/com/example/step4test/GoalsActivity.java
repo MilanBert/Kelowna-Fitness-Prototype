@@ -64,24 +64,32 @@ public class GoalsActivity extends AppCompatActivity {
         try (BufferedReader reader = new BufferedReader(new FileReader(goalsFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] goalData = line.split(";"); // Assuming goals are stored as "name;description;progress"
+                String[] goalData = line.split(";");
+                if (goalData.length < 3) {
+                    android.util.Log.e("GoalsActivity", "Invalid goal data: " + line);
+                    continue; // Skip invalid lines
+                }
                 goalsList.add(goalData);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            android.util.Log.e("GoalsActivity", "Error loading goals", e);
         }
 
-        // Display each goal
+        // Display each valid goal
         for (String[] goal : goalsList) {
-            if (goal.length < 3) continue;
-
             String goalName = goal[0];
             String goalDescription = goal[1];
-            int goalProgress = Integer.parseInt(goal[2]);
-
+            int goalProgress = 0;
+            try {
+                goalProgress = Integer.parseInt(goal[2]);
+            } catch (NumberFormatException e) {
+                android.util.Log.e("GoalsActivity", "Invalid progress value: " + goal[2]);
+            }
             addGoalToLayout(goalName, goalDescription, goalProgress);
         }
     }
+
 
     private void addGoalToLayout(String goalName, String goalDescription, int progress) {
         View goalView = getLayoutInflater().inflate(R.layout.goal_item, null);
