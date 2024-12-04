@@ -102,6 +102,19 @@ public class GoalsActivity extends AppCompatActivity {
         txtGoalName.setText(goalName);
         txtGoalDescription.setText(goalDescription);
 
+        // Set OnClickListener for the goal
+        goalView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to GoalSelectActivity with goal details
+                Intent intent = new Intent(GoalsActivity.this, SelectGoalActivity.class);
+                intent.putExtra("goalName", goalName);
+                intent.putExtra("goalDescription", goalDescription);
+                intent.putExtra("goalProgress", progress);
+                startActivity(intent);
+            }
+        });
+
         layoutGoalsContainer.addView(goalView);
     }
 }
