@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class GoalsActivity extends AppCompatActivity {
 
@@ -35,22 +33,16 @@ public class GoalsActivity extends AppCompatActivity {
         loadGoalsFromFile();
 
         // Set up Back button to go to the Home Activity
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GoalsActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(GoalsActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         // Set up Add New button to go to CreateGoalActivity
-        btnAddNewGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GoalsActivity.this, CreateGoalsActivity.class);
-                startActivity(intent);
-            }
+        btnAddNewGoal.setOnClickListener(v -> {
+            Intent intent = new Intent(GoalsActivity.this, CreateGoalsActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -60,38 +52,35 @@ public class GoalsActivity extends AppCompatActivity {
             return; // No file exists, nothing to load
         }
 
-        ArrayList<String[]> goalsList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(goalsFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] goalData = line.split(";");
-                if (goalData.length < 3) {
-                    android.util.Log.e("GoalsActivity", "Invalid goal data: " + line);
-                    continue; // Skip invalid lines
+                if (goalData.length < 4) {
+                    continue; // Skip invalid entries
                 }
-                goalsList.add(goalData);
+
+                String goalName = goalData[0];
+                String goalDescription = goalData[1];
+                String goalCategory = goalData[2];
+                int progress;
+
+                // Validate progress
+                try {
+                    progress = Integer.parseInt(goalData[3]);
+                    progress = Math.max(0, Math.min(progress, 100)); // Clamp to 0-100
+                } catch (NumberFormatException e) {
+                    progress = 0; // Default to 0 if invalid
+                }
+
+                addGoalToLayout(goalName, goalDescription, goalCategory, progress);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            android.util.Log.e("GoalsActivity", "Error loading goals", e);
-        }
-
-        // Display each valid goal
-        for (String[] goal : goalsList) {
-            String goalName = goal[0];
-            String goalDescription = goal[1];
-            int goalProgress = 0;
-            try {
-                goalProgress = Integer.parseInt(goal[2]);
-            } catch (NumberFormatException e) {
-                android.util.Log.e("GoalsActivity", "Invalid progress value: " + goal[2]);
-            }
-            addGoalToLayout(goalName, goalDescription, goalProgress);
         }
     }
 
-
-    private void addGoalToLayout(String goalName, String goalDescription, int progress) {
+    private void addGoalToLayout(String goalName, String goalDescription, String goalCategory, int progress) {
         View goalView = getLayoutInflater().inflate(R.layout.goal_item, null);
 
         ProgressBar progressBar = goalView.findViewById(R.id.progressGoal);
@@ -102,17 +91,14 @@ public class GoalsActivity extends AppCompatActivity {
         txtGoalName.setText(goalName);
         txtGoalDescription.setText(goalDescription);
 
-        // Set OnClickListener for the goal
-        goalView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to GoalSelectActivity with goal details
-                Intent intent = new Intent(GoalsActivity.this, SelectGoalActivity.class);
-                intent.putExtra("goalName", goalName);
-                intent.putExtra("goalDescription", goalDescription);
-                intent.putExtra("goalProgress", progress);
-                startActivity(intent);
-            }
+        // Set OnClickListener to open GoalSelectActivity
+        goalView.setOnClickListener(v -> {
+            Intent intent = new Intent(GoalsActivity.this, SelectGoalActivity.class);
+            intent.putExtra("goalName", goalName);
+            intent.putExtra("goalDescription", goalDescription);
+            intent.putExtra("goalCategory", goalCategory);
+            intent.putExtra("goalProgress", progress);
+            startActivity(intent);
         });
 
         layoutGoalsContainer.addView(goalView);

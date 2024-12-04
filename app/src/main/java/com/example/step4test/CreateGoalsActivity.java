@@ -74,31 +74,25 @@ public class CreateGoalsActivity extends AppCompatActivity {
             return;
         }
 
-        String goalData = goalName + ";" + goalDescription + ";" + selectedObjective + "\n";
+        // Default progress is 0%
+        String goalData = goalName + ";" + goalDescription + ";" + selectedObjective + ";0\n";
 
         try {
-            // Save the goal data to a file
             FileOutputStream fos = openFileOutput("goals.txt", MODE_APPEND);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             osw.write(goalData);
             osw.close();
             fos.close();
 
-            // Log successful save
-            android.util.Log.d("CreateGoalsActivity", "Goal saved successfully: " + goalData);
-
-            // Show success message
             Toast.makeText(this, "Goal saved successfully!", Toast.LENGTH_SHORT).show();
-
-            // Navigate back to GoalsActivity
             Intent intent = new Intent(CreateGoalsActivity.this, GoalsActivity.class);
             startActivity(intent);
             finish();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Error saving goal: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            android.util.Log.e("CreateGoalsActivity", "Error saving goal", e);
         }
     }
+
 
 }

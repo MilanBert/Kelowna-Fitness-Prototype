@@ -67,4 +67,23 @@
         android:progress="50"
         android:progressTint="#4CAF50" />
 
+    <Button
+        android:id="@+id/btnIncrementProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Increment Progress"
+        android:layout_below="@id/progressGoal"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <Button
+        android:id="@+id/btnResetProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset Progress"
+        android:layout_below="@id/btnIncrementProgress"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+
 </RelativeLayout>
