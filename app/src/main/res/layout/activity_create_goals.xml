@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4"
+    tools:context=".CreateGoalsActivity">
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="BACK"
+        android:backgroundTint="#FF3D00"
+        android:textColor="#FFFFFF" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/txtCreateGoalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Create Goal"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Input for Goal Name -->
+    <EditText
+        android:id="@+id/edtGoalName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="16dp"
+        android:hint="Enter Goal Name"
+        android:padding="12dp"
+        android:background="@drawable/goal_card_backround"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:layout_below="@id/txtCreateGoalTitle" />
+
+    <!-- Dropdown for Objectives -->
+    <Spinner
+        android:id="@+id/spinnerObjectives"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_below="@id/edtGoalName"
+        android:background="@drawable/goal_card_backround"
+        android:padding="12dp" />
+
+    <!-- Input for Goal Description -->
+    <EditText
+        android:id="@+id/edtGoalDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:hint="Enter Goal Description"
+        android:padding="12dp"
+        android:background="@drawable/goal_card_backround"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:textSize="16sp"
+        android:layout_below="@id/spinnerObjectives" />
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/btnSaveGoal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="32dp"
+        android:text="SAVE GOAL"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_below="@id/edtGoalDescription" />
+
+</RelativeLayout>
