@@ -1,10 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f4f4f4"
     tools:context=".GoalsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF3D00"
+        android:text="BACK"
+        android:textColor="#FFFFFF" />
+
+    <!-- Add New Button -->
+    <Button
+        android:id="@+id/btnAddNewGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_alignTop="@id/btnBack"
+        android:backgroundTint="#4CAF50"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <!-- Title -->
+
+    <!-- ScrollView for Goals List -->
+
+    <TextView
+        android:id="@+id/txtGoalsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/scrollGoalsList"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="23dp"
+        android:layout_toStartOf="@id/btnAddNewGoal"
+        android:layout_toEndOf="@id/btnBack"
+        android:gravity="center"
+        android:text="Goals"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/scrollGoalsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btnBack"
+        android:layout_above="@+id/btnViewCompletedGoals"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:id="@+id/layoutGoalsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" />
+    </ScrollView>
+
+    <!-- View Completed Goals Button -->
+    <Button
+        android:id="@+id/btnViewCompletedGoals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="#444444"
+        android:text="View Completed Goals"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+</RelativeLayout>
