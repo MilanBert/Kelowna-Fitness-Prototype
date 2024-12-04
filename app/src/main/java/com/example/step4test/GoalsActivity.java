@@ -11,8 +11,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class GoalsActivity extends AppCompatActivity {
 
@@ -28,6 +30,7 @@ public class GoalsActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnAddNewGoal = findViewById(R.id.btnAddNewGoal);
         layoutGoalsContainer = findViewById(R.id.layoutGoalsContainer);
+        Button btnViewCompletedGoals = findViewById(R.id.btnViewCompletedGoals);
 
         // Load goals from file and display them
         loadGoalsFromFile();
@@ -44,16 +47,38 @@ public class GoalsActivity extends AppCompatActivity {
             Intent intent = new Intent(GoalsActivity.this, CreateGoalsActivity.class);
             startActivity(intent);
         });
+
+        // Set up View Completed Goals button to go to GoalCompletionActivity
+        btnViewCompletedGoals.setOnClickListener(v -> {
+            Intent intent = new Intent(GoalsActivity.this, GoalCompletionActivity.class);
+            startActivity(intent);
+        });
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        layoutGoalsContainer.removeAllViews(); // Clear the existing views
+        loadGoalsFromFile(); // Reload the updated list
+    }
+
+
 
     private void loadGoalsFromFile() {
         File goalsFile = new File(getFilesDir(), "goals.txt");
+        File completedGoalsFile = new File(getFilesDir(), "compgoals.txt");
+
         if (!goalsFile.exists()) {
             return; // No file exists, nothing to load
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(goalsFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(goalsFile));
+             BufferedWriter completedWriter = new BufferedWriter(new FileWriter(completedGoalsFile, true))) {
+
             String line;
+            StringBuilder updatedGoals = new StringBuilder();
+
             while ((line = reader.readLine()) != null) {
                 String[] goalData = line.split(";");
                 if (goalData.length < 4) {
@@ -73,12 +98,27 @@ public class GoalsActivity extends AppCompatActivity {
                     progress = 0; // Default to 0 if invalid
                 }
 
-                addGoalToLayout(goalName, goalDescription, goalCategory, progress);
+                if (progress == 100) {
+                    // Write the completed goal to the completed goals file
+                    completedWriter.write(line + "\n");
+                } else {
+                    // Keep non-completed goals in the main goals list
+                    updatedGoals.append(line).append("\n");
+                    addGoalToLayout(goalName, goalDescription, goalCategory, progress);
+                }
             }
+
+            // Overwrite the original goals file with updated goals
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(goalsFile))) {
+                writer.write(updatedGoals.toString());
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
 
     private void addGoalToLayout(String goalName, String goalDescription, String goalCategory, int progress) {
         View goalView = getLayoutInflater().inflate(R.layout.goal_item, null);
