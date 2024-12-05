@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/main">
+    <Button
+        android:id="@+id/button"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:backgroundTint="#202020"
+        android:text="Gym Locator"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:layout_weight="0.6" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
+        android:layout_weight="0.1"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="Filter By:" />
+
+    <RadioGroup
+        android:layout_width="400dp"
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.5"
+        android:id="@+id/radgroupone"
+        >
+        <RadioButton android:id="@+id/radio_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opens By:"/>
+        <RadioButton android:id="@+id/radio_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8am"/>
+        <RadioButton android:id="@+id/radio_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9am"/>
+        <RadioButton android:id="@+id/radio_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10am+"/>
+    </RadioGroup>
+    <RadioGroup
+        android:layout_width="400dp"
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.5"
+        android:id="@+id/radgrouptwo"
+        >
+        <RadioButton android:id="@+id/radiotwp_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Closes At:"/>
+        <RadioButton android:id="@+id/radiotwo_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7pm+"/>
+        <RadioButton android:id="@+id/radiotwo_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8pm+"/>
+        <RadioButton android:id="@+id/radiotwo_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9pm+"/>
+    </RadioGroup>
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+    <Button
+        android:id="@+id/buttonToExit"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:backgroundTint="#FF2020"
+        android:text="Back"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_weight="0.6" />
+
+
+</LinearLayout>

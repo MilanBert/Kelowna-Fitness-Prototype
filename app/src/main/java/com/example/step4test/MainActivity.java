@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         findGymButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add functionality here later
+                Intent intent = new Intent(MainActivity.this, mapEntrySelectionActivity.class);
+                startActivity(intent);
             }
         });
     }
