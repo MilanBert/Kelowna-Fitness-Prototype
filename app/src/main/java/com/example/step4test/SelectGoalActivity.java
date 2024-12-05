@@ -57,14 +57,13 @@ public class SelectGoalActivity extends AppCompatActivity {
 
         // Set up Increment and Reset Progress Buttons
         btnIncrementProgress.setOnClickListener(v -> {
-            if (((float)goalProgress-start)/((float)target-start) <1) {
-                goalProgress = (int)(goalProgress +((float)(target-start)/10));
-                progressGoal.setProgress((int) (((float)goalProgress-start)/((float)target-start)*100));
+            if (((float) (goalProgress - start) / (float) (target - start)) < 1) {
+                goalProgress += (target - start) / 10;
+                progressGoal.setProgress((int) (((float) (goalProgress - start) / (float) (target - start)) * 100));
                 updateGoalProgress(goalProgress);
-                Log.d("incrementer:"," progress:"+goalProgress);
-                Log.d("incrementer:"," start: "+start+" target:"+target);
             }
         });
+
 
         btnResetProgress.setOnClickListener(v -> {
             goalProgress = start;

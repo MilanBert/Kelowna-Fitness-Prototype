@@ -66,9 +66,11 @@ public class GoalCompletionActivity extends AppCompatActivity {
         TextView txtGoalDescription = goalView.findViewById(R.id.txtGoalDescription);
         ProgressBar progressBar = goalView.findViewById(R.id.progressGoal);
 
+        // Calculate percentage progress
+        int percentageProgress = (int) (((float) progress / (float) target) * 100);
         txtGoalName.setText(goalName);
         txtGoalDescription.setText(goalDescription);
-        progressBar.setProgress((int) (((float)progress)/((float)target)*100)); // Ensure the progress bar reflects completion
+        progressBar.setProgress(percentageProgress);
 
         // Set OnClickListener to open SelectGoalActivity
         goalView.setOnClickListener(v -> {
@@ -81,5 +83,6 @@ public class GoalCompletionActivity extends AppCompatActivity {
 
         layoutContainer.addView(goalView);
     }
+
 
 }
