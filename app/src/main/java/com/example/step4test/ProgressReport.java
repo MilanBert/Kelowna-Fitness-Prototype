@@ -1,7 +1,10 @@
 package com.example.step4test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +20,8 @@ public class ProgressReport extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecycleAdapter myAdapter;
     private ArrayList<Goal> goalList; // Change to store Goal objects
-
+    private Button backbutton;
+    private ProgressBarView selectedGoalProgressBars;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +36,20 @@ public class ProgressReport extends AppCompatActivity {
         });
 
         Log.d("RecyclerView", "I just ran the onCreate method!");
-
+        selectedGoalProgressBars = findViewById(R.id.selectedGoalProgressBars);
         // Initialize the goals and set up RecyclerView
         goalList = initializeDummyGoals(); // Call the method to initialize dummy data
         setUpRecyclerview(); // Set up RecyclerView after data is initialized
+        backbutton = findViewById(R.id.BackBtn);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to GoalsActivity
+                Intent intent = new Intent(ProgressReport.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     protected void setUpRecyclerview() {
@@ -69,5 +83,15 @@ public class ProgressReport extends AppCompatActivity {
         goals.add(new Goal("Weight", 190.0f, 280.0f, 300f));
 
         return goals;
+    }
+
+    public void updateSelectedGoalProgressBars(int position) {
+        Goal selectedGoal = goalList.get(position);
+
+        // Show progress bars for the selected goal
+        selectedGoalProgressBars.setVisibility(View.VISIBLE);
+
+        // Set progress values to the ProgressBarView (start, target, current)
+        selectedGoalProgressBars.setProgressValues(selectedGoal.getStart(), selectedGoal.getTarget(), selectedGoal.getCurrent());
     }
 }

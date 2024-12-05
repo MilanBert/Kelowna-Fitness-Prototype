@@ -15,7 +15,7 @@ public class Goal {
         this.target = target;
         this.current = current;
         this.start = start;
-        this.trend = (current-target)/(start-target);
+        this.trend = (current-start)/(target-start);
     }
 
     // Getters for the goal properties

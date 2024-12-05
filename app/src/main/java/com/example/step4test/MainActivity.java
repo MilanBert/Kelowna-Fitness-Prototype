@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        progressButton = findViewById(R.id.progressReportButton);
-        progressButton.setOnClickListener(new View.OnClickListener() {
+        // Progress Report Button
+        progressReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Launch the ProgressReport activity using an Intent
@@ -51,13 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Progress Report Button
-        progressReportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add functionality here later
-            }
-        });
+
 
         // Find A Gym Button
         findGymButton.setOnClickListener(new View.OnClickListener() {

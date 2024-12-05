@@ -2,6 +2,7 @@ package com.example.step4test;
 
 import static java.lang.Math.round;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
     private List<Goal> itemList;
-
+    private int selectedPosition = -1; // To track the selected goal
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView, trendText;
 
@@ -39,14 +40,21 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return new ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder( ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         float trend = itemList.get(position).getTrend();
         String item = itemList.get(position).getName();
-        String trendString = (trend>0?"+":"-")+ getTrendPercentage(trend);
+        String trendString = getTrendPercentage(trend) +(trend>0?" closer":" further away");
         holder.textView.setText(item);
         holder.trendText.setText(trendString);
         holder.trendText.setTextColor(mapFloatToColor(trend));
 
+        holder.itemView.setSelected(position == selectedPosition); // Highlight selected item
+        holder.itemView.setOnClickListener(v -> {
+            selectedPosition = position; // Update selected position
+            notifyDataSetChanged(); // Notify adapter to refresh the RecyclerView
+            ProgressReport activity = (ProgressReport) holder.itemView.getContext();
+            activity.updateSelectedGoalProgressBars(position);
+        });
     }
 
     @Override

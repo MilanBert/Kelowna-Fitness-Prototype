@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <!-- Progress Bar View for Selected Goal -->
+
+    <com.example.step4test.ProgressBarView
+        android:id="@+id/selectedGoalProgressBars"
+        android:layout_width="179dp"
+        android:layout_height="277dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/Goals"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.542"
+        tools:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Goals"
         android:layout_width="401dp"
@@ -16,4 +30,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.909" />
+
+    <Button
+        android:id="@+id/BackBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF3D00"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        tools:text="Back" />
 </androidx.constraintlayout.widget.ConstraintLayout>
