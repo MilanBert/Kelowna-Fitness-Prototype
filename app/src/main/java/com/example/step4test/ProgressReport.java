@@ -13,6 +13,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class ProgressReport extends AppCompatActivity {
@@ -27,13 +33,6 @@ public class ProgressReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_progress_report);
-
-        // Apply window insets (not related to RecyclerView issue, but part of your code)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.ProgressReport), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         Log.d("RecyclerView", "I just ran the onCreate method!");
         selectedGoalProgressBars = findViewById(R.id.selectedGoalProgressBars);
@@ -72,15 +71,16 @@ public class ProgressReport extends AppCompatActivity {
 
     // Method to initialize dummy goal data
     protected ArrayList<Goal> initializeDummyGoals() {
-        ArrayList<Goal> goals = new ArrayList<>();
+        ArrayList<Goal> goals = loadGoalsFromFile();
 
         // Create dummy goal objects with hardcoded values
-        goals.add(new Goal("Daily Kcal", 100.0f, 40.0f, 20.0f));
-        goals.add(new Goal("Running", 200.0f, 60.0f, 30.0f));
-        goals.add(new Goal("Bench Press", 150.0f, 80.0f, 50.0f));
-        goals.add(new Goal("Weekly Pushups", 70.0f, 50.0f, 25.0f));
-        goals.add(new Goal("Daily Protein", 28.0f, 17.0f, 11f));
-        goals.add(new Goal("Weight", 190.0f, 280.0f, 300f));
+        goals.add(new Goal("Daily Kcal", "daily", 100.0f, 40.0f, 20.0f));
+        goals.add(new Goal("Running", "daily", 200.0f, 60.0f, 30.0f));
+        goals.add(new Goal("Bench Press", "once", 150.0f, 80.0f, 50.0f));
+        goals.add(new Goal("Weekly Pushups", "weekly", 70.0f, 50.0f, 25.0f));
+        goals.add(new Goal("Daily Protein", "daily",28.0f, 17.0f, 11f));
+        goals.add(new Goal("Weight", "once",190.0f, 280.0f, 300f));
+
 
         return goals;
     }
@@ -93,5 +93,63 @@ public class ProgressReport extends AppCompatActivity {
 
         // Set progress values to the ProgressBarView (start, target, current)
         selectedGoalProgressBars.setProgressValues(selectedGoal.getStart(), selectedGoal.getTarget(), selectedGoal.getCurrent());
+    }
+    private ArrayList<Goal> loadGoalsFromFile() {
+        File goalsFile = new File(getFilesDir(), "goals.txt");
+        File completedGoalsFile = new File(getFilesDir(), "compgoals.txt");
+        ArrayList<Goal> goals = new ArrayList<>();
+        if (!goalsFile.exists()) {
+            return null; // No file exists, nothing to load
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(goalsFile));
+             BufferedWriter completedWriter = new BufferedWriter(new FileWriter(completedGoalsFile, true))) {
+
+            String line;
+            StringBuilder updatedGoals = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                String[] goalData = line.split(";");
+                if (goalData.length < 7) {
+                    continue; // Skip invalid entries
+                }
+
+                String goalName = goalData[0];
+                String goalFrequency = goalData[3];
+
+                int progress;
+
+                // Validate progress
+                try {
+                    progress = Integer.parseInt(goalData[4]);
+
+                } catch (NumberFormatException e) {
+                    progress = 0; // Default to 0 if invalid
+                }
+                int startValue;
+                try {
+                    startValue = Integer.parseInt(goalData[6]);
+
+                } catch (NumberFormatException e) {
+                    startValue = 0; // Default to 0 if invalid
+                }
+                int targetValue;
+                try {
+                    targetValue = Integer.parseInt(goalData[5]);
+
+                } catch (NumberFormatException e) {
+                    targetValue = 0; // Default to 0 if invalid
+                }
+
+
+                    goals.add(new Goal(goalName, goalFrequency,targetValue,progress,startValue));
+
+
+            }
+            return goals;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
