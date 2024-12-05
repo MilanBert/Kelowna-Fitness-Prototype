@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +26,7 @@ public class ProgressReport extends AppCompatActivity {
     private ArrayList<Goal> goalList; // Change to store Goal objects
     private Button backbutton;
     private ProgressBarView selectedGoalProgressBars;
+    private TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +48,7 @@ public class ProgressReport extends AppCompatActivity {
                 finish();
             }
         });
+        title = findViewById(R.id.titleText);
     }
 
     protected void setUpRecyclerview() {
@@ -71,7 +71,14 @@ public class ProgressReport extends AppCompatActivity {
 
     // Method to initialize dummy goal data
     protected ArrayList<Goal> initializeDummyGoals() {
-        ArrayList<Goal> goals = loadGoalsFromFile();
+        ArrayList<Goal> goals = new ArrayList<Goal>();
+    try{
+        goals.addAll(loadGoalsFromFile());
+    }
+        catch(Exception e) {
+        //  Block of code to handle errors
+    }
+
 
         // Create dummy goal objects with hardcoded values
         goals.add(new Goal("Daily Kcal", "daily", 100.0f, 40.0f, 20.0f));
@@ -86,8 +93,9 @@ public class ProgressReport extends AppCompatActivity {
     }
 
     public void updateSelectedGoalProgressBars(int position) {
-        Goal selectedGoal = goalList.get(position);
 
+        Goal selectedGoal = goalList.get(position);
+title.setText(selectedGoal.getName());
         // Show progress bars for the selected goal
         selectedGoalProgressBars.setVisibility(View.VISIBLE);
 
@@ -95,6 +103,7 @@ public class ProgressReport extends AppCompatActivity {
         selectedGoalProgressBars.setProgressValues(selectedGoal.getStart(), selectedGoal.getTarget(), selectedGoal.getCurrent());
     }
     private ArrayList<Goal> loadGoalsFromFile() {
+
         File goalsFile = new File(getFilesDir(), "goals.txt");
         File completedGoalsFile = new File(getFilesDir(), "compgoals.txt");
         ArrayList<Goal> goals = new ArrayList<>();

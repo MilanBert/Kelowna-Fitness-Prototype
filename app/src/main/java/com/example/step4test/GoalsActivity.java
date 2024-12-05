@@ -114,7 +114,7 @@ public class GoalsActivity extends AppCompatActivity {
                     targetValue = 0; // Default to 0 if invalid
                 }
 
-                if (progress >= 100 && goalFrequency.equals("once")) {
+                if (((float)progress-startValue)/((float)targetValue-startValue) <1 && goalFrequency.equals("once")) {
                     // Write the completed goal to the completed goals file
                     completedWriter.write(line + "\n");
                 } else {
@@ -137,7 +137,7 @@ public class GoalsActivity extends AppCompatActivity {
 
 
 
-    private void addGoalToLayout(String goalName, String goalDescription, String goalCategory, String frequency, int progress, int start, int target) {
+    private void addGoalToLayout(String goalName, String goalDescription, String goalCategory, String frequency, int progress, int target, int start) {
         View goalView = getLayoutInflater().inflate(R.layout.goal_item, null);
 
         ProgressBar progressBar = goalView.findViewById(R.id.progressGoal);
