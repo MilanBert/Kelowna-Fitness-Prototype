@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         logCaloriesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add functionality here later
+                Intent intent = new Intent(MainActivity.this, LogCalories.class);
+                startActivity(intent);
             }
         });
 
