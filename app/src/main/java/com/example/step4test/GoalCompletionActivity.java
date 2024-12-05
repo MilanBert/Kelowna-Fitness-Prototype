@@ -44,21 +44,22 @@ public class GoalCompletionActivity extends AppCompatActivity {
 
             while ((line = reader.readLine()) != null) {
                 String[] goalData = line.split(";");
-                if (goalData.length < 4) continue; // Skip invalid entries
+                if (goalData.length < 7) continue; // Skip invalid entries
 
                 String goalName = goalData[0];
                 String goalDescription = goalData[1];
                 String goalCategory = goalData[2];
-                int progress = Integer.parseInt(goalData[3]);
+                int progress = Integer.parseInt(goalData[4]);
+                int target = Integer.parseInt(goalData[5]);
 
-                addCompletedGoalToLayout(goalName, goalDescription, progress, layoutContainer);
+                addCompletedGoalToLayout(goalName, goalDescription, progress, target, layoutContainer);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void addCompletedGoalToLayout(String goalName, String goalDescription, int progress, LinearLayout layoutContainer) {
+    private void addCompletedGoalToLayout(String goalName, String goalDescription, int progress, int target, LinearLayout layoutContainer) {
         View goalView = getLayoutInflater().inflate(R.layout.goal_item, null);
 
         TextView txtGoalName = goalView.findViewById(R.id.txtGoalName);
@@ -67,7 +68,7 @@ public class GoalCompletionActivity extends AppCompatActivity {
 
         txtGoalName.setText(goalName);
         txtGoalDescription.setText(goalDescription);
-        progressBar.setProgress(progress); // Ensure the progress bar reflects completion
+        progressBar.setProgress((int) (((float)progress)/((float)target)*100)); // Ensure the progress bar reflects completion
 
         // Set OnClickListener to open SelectGoalActivity
         goalView.setOnClickListener(v -> {

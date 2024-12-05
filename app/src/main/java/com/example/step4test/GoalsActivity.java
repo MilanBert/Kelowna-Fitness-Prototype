@@ -81,31 +81,48 @@ public class GoalsActivity extends AppCompatActivity {
 
             while ((line = reader.readLine()) != null) {
                 String[] goalData = line.split(";");
-                if (goalData.length < 4) {
+                if (goalData.length < 7) {
                     continue; // Skip invalid entries
                 }
 
                 String goalName = goalData[0];
                 String goalDescription = goalData[1];
                 String goalCategory = goalData[2];
+                String goalFrequency = goalData[3];
+
                 int progress;
 
                 // Validate progress
                 try {
-                    progress = Integer.parseInt(goalData[3]);
-                    progress = Math.max(0, Math.min(progress, 100)); // Clamp to 0-100
+                    progress = Integer.parseInt(goalData[4]);
+
                 } catch (NumberFormatException e) {
                     progress = 0; // Default to 0 if invalid
                 }
+                int startValue;
+                try {
+                    startValue = Integer.parseInt(goalData[6]);
 
-                if (progress == 100) {
+                } catch (NumberFormatException e) {
+                   startValue = 0; // Default to 0 if invalid
+                }
+                int targetValue;
+                try {
+                    targetValue = Integer.parseInt(goalData[5]);
+
+                } catch (NumberFormatException e) {
+                    targetValue = 0; // Default to 0 if invalid
+                }
+
+                if (((float)progress-startValue)/((float)targetValue-startValue) <1 && goalFrequency.equals("once")) {
                     // Write the completed goal to the completed goals file
                     completedWriter.write(line + "\n");
                 } else {
                     // Keep non-completed goals in the main goals list
                     updatedGoals.append(line).append("\n");
-                    addGoalToLayout(goalName, goalDescription, goalCategory, progress);
+                    addGoalToLayout(goalName, goalDescription, goalCategory, goalFrequency, progress, targetValue,startValue);
                 }
+
             }
 
             // Overwrite the original goals file with updated goals
@@ -120,14 +137,14 @@ public class GoalsActivity extends AppCompatActivity {
 
 
 
-    private void addGoalToLayout(String goalName, String goalDescription, String goalCategory, int progress) {
+    private void addGoalToLayout(String goalName, String goalDescription, String goalCategory, String frequency, int progress, int target, int start) {
         View goalView = getLayoutInflater().inflate(R.layout.goal_item, null);
 
         ProgressBar progressBar = goalView.findViewById(R.id.progressGoal);
         TextView txtGoalName = goalView.findViewById(R.id.txtGoalName);
         TextView txtGoalDescription = goalView.findViewById(R.id.txtGoalDescription);
 
-        progressBar.setProgress(progress);
+        progressBar.setProgress((int) (((float)progress-start)/((float)target-start)*100));
         txtGoalName.setText(goalName);
         txtGoalDescription.setText(goalDescription);
 
@@ -137,7 +154,10 @@ public class GoalsActivity extends AppCompatActivity {
             intent.putExtra("goalName", goalName);
             intent.putExtra("goalDescription", goalDescription);
             intent.putExtra("goalCategory", goalCategory);
+            intent.putExtra("frequency", frequency);
             intent.putExtra("goalProgress", progress);
+            intent.putExtra("startValue", start);
+            intent.putExtra("targetValue", target);
             startActivity(intent);
         });
 

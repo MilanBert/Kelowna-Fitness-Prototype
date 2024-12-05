@@ -46,9 +46,13 @@ public class MainActivity extends AppCompatActivity {
         progressReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add functionality here later
+                // Launch the ProgressReport activity using an Intent
+                Intent intent = new Intent(MainActivity.this, ProgressReport.class);
+                startActivity(intent); // This starts ProgressReport as a new Activity
             }
         });
+
+
 
         // Find A Gym Button
         findGymButton.setOnClickListener(new View.OnClickListener() {

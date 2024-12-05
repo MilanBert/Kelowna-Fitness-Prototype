@@ -2,6 +2,7 @@ package com.example.step4test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.annotation.Target;
 
 public class SelectGoalActivity extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class SelectGoalActivity extends AppCompatActivity {
     private Button btnBack, btnIncrementProgress, btnResetProgress;
 
     private String goalName, goalDescription, goalCategory;
-    private int goalProgress;
+    private int goalProgress,start,target;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,27 +44,31 @@ public class SelectGoalActivity extends AppCompatActivity {
         goalDescription = intent.getStringExtra("goalDescription");
         goalCategory = intent.getStringExtra("goalCategory");
         goalProgress = intent.getIntExtra("goalProgress", 0);
+        start = intent.getIntExtra("startValue",0);
+        target = intent.getIntExtra("targetValue",0);
 
         // Set goal details
         txtGoalName.setText(goalName);
         txtGoalDescription.setText(goalDescription);
-        progressGoal.setProgress(goalProgress);
+        progressGoal.setProgress((int) (((float)goalProgress-start)/((float)target-start)*100));
 
         // Set up Back button
         btnBack.setOnClickListener(v -> finish()); // Ends this activity and returns to the previous one
 
         // Set up Increment and Reset Progress Buttons
         btnIncrementProgress.setOnClickListener(v -> {
-            if (goalProgress < 100) {
-                goalProgress = Math.min(goalProgress + 10, 100);
-                progressGoal.setProgress(goalProgress);
+            if (((float)goalProgress-start)/((float)target-start) <1) {
+                goalProgress = (int)(goalProgress +((float)(target-start)/10));
+                progressGoal.setProgress((int) (((float)goalProgress-start)/((float)target-start)*100));
                 updateGoalProgress(goalProgress);
+                Log.d("incrementer:"," progress:"+goalProgress);
+                Log.d("incrementer:"," start: "+start+" target:"+target);
             }
         });
 
         btnResetProgress.setOnClickListener(v -> {
-            goalProgress = 0;
-            progressGoal.setProgress(goalProgress);
+            goalProgress = start;
+            progressGoal.setProgress(0);
             updateGoalProgress(goalProgress);
         });
     }
@@ -81,7 +87,7 @@ public class SelectGoalActivity extends AppCompatActivity {
                 String[] goalData = line.split(";");
                 if (goalData[0].equals(goalName)) {
                     // Update the progress value for this goal
-                    goalData[3] = String.valueOf(newProgress);
+                    goalData[4] = String.valueOf(newProgress);
                     line = String.join(";", goalData);
                 }
                 writer.write(line + "\n");
