@@ -66,14 +66,14 @@ public class ProgressBarView extends View {
         float currentHeight, startHeight, targetHeight;
 
         // Calculate the height of each bar as a proportion of the max height
-        startHeight = (start == highest) ? maxHeight : (start / highest) * maxHeight;
+        startHeight =  (start == highest) ? maxHeight : 60+(start / highest) * maxHeight;
         currentHeight = (current == highest) ? maxHeight : (current / highest) * maxHeight;
         targetHeight = (target == highest) ? maxHeight : (target / highest) * maxHeight;
 
         // Draw the bars with rounded corners
-        canvas.drawRoundRect(0, maxHeight - lerpHeight(targetHeight, 0), barWidth, maxHeight, 25, 25, targetPaint);
+        canvas.drawRoundRect(barWidth * 2 - 30, maxHeight - lerpHeight(targetHeight, 0),barWidth * 3 - 30 , maxHeight, 25, 25, targetPaint);
         canvas.drawRoundRect(barWidth - 20, maxHeight - lerpHeight(currentHeight, 1), barWidth * 2 - 20, maxHeight, 25, 25, currentPaint);
-        canvas.drawRoundRect(barWidth * 2 - 30, maxHeight - lerpHeight(startHeight, 2), barWidth * 3 - 30, maxHeight, 25, 25, startPaint);
+        canvas.drawRoundRect(0, maxHeight - lerpHeight(startHeight, 2),barWidth, maxHeight, 25, 25, startPaint);
     }
 
     public float lerpHeight(float value, int index) {
