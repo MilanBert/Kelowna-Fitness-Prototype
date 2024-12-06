@@ -103,7 +103,7 @@ public class mapFragActivity extends AppCompatActivity implements OnMapReadyCall
                 .title("Health Gym"));
         fiveMark = googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(49.9394, -119.3948))
-                .title("UBCO Gym"));
+                .title("UBCO Gym: 5am-10pm"));
         sixMark = googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(50.0517, -119.4126))
                 .title("Grind Gym"));
