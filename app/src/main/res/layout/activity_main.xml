@@ -10,7 +10,8 @@
     tools:context=".MainActivity">
 
     <!-- App Title -->
-<TextView
+
+    <TextView
 android:id="@+id/appTitle"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
@@ -35,6 +36,11 @@ android:textColor="#000000"
         app:layout_constraintTop_toBottomOf="@id/appTitle" />
 
     <!-- Log Calories Button -->
+
+    <!-- Middle Button Container -->
+
+    <!-- Find a Gym Button -->
+
     <Button
         android:id="@+id/logCaloriesButton"
         android:layout_width="385dp"
@@ -45,13 +51,12 @@ android:textColor="#000000"
         android:text="Log Calories"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dumbbellImage" />
-
-    <!-- Middle Button Container -->
-
-    <!-- Find a Gym Button -->
+        app:layout_constraintTop_toBottomOf="@id/dumbbellImage"
+        app:layout_constraintVertical_bias="0.014" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/middleButtonContainer"
@@ -95,9 +100,35 @@ android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@id/goalsButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.45" />
+
+        <ImageButton
+            android:id="@+id/imageButton_goals"
+            android:layout_width="36dp"
+            android:layout_height="37dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.33"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.223"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
+
+        <ImageButton
+            android:id="@+id/imageButton_pr"
+            android:layout_width="36dp"
+            android:layout_height="37dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.903"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.223"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Find A Gym Button -->
+
     <Button
         android:id="@+id/findGymButton"
         android:layout_width="382dp"
@@ -108,8 +139,34 @@ android:textColor="#000000"
         android:text="Find A Gym"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/middleButtonContainer" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/middleButtonContainer"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imageButton_log"
+        android:layout_width="36dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.883"
+        app:layout_constraintStart_toStartOf="@+id/logCaloriesButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.216"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+
+    <ImageButton
+        android:id="@+id/imageButton_gym"
+        android:layout_width="36dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.647"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+</androidx.constraintlayout.widget.ConstraintLayout>
