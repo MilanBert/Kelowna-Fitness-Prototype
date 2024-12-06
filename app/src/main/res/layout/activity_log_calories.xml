@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".LogCalories">
+
+    <!-- Done Button -->
+<Button
+android:id="@+id/logcaloriesback"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:backgroundTint="#FF3D00"
+    android:text="Done"
+    android:textColor="#FFFFFF"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.264"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.679" />
+
+    <!-- Calories Till Goal -->
+<TextView
+android:id="@+id/caloriesTillGoal"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Calories Till Goal:"
+android:textColor="#000000"
+    android:textSize="22sp"
+    android:textStyle="italic"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.327"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.837" />
+
+    <!-- Title -->
+<TextView
+android:id="@+id/textView"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Calorie Tracker"
+android:textColor="#000000"
+    android:textSize="30sp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.077" />
+
+    <!-- Food Display -->
+<ScrollView
+android:id="@+id/foodDisplay"
+android:layout_width="276dp"
+android:layout_height="316dp"
+android:background="#444444"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.293">
+
+<LinearLayout
+android:id="@+id/linearLayout"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+    android:background="#E2E2E2"/>
+    </ScrollView>
+
+    <!-- Add Food Button -->
+<Button
+android:id="@+id/addFoodButton"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:backgroundTint="#4CAF50"
+    android:text="Add Food"
+    android:textColor="#FFFFFF"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.745"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.679" />
+
+    <!-- Total Calories -->
+<TextView
+android:id="@+id/totalCalories"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Total Calories:"
+android:textColor="#000000"
+    android:textSize="22sp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.367"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.771" />
+    </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,11 +43,26 @@
         <activity
             android:name=".mapEntrySelectionActivity"
             android:exported="false" />
+      <activity
+            android:name=".AddFood"
+            android:exported="false" />
+        <activity
+            android:name=".LogCalories"
+            android:exported="false" />
+        <activity
+            android:name=".GoalCompletionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectGoalActivity"
+            android:exported="false" />
         <activity
             android:name=".CreateGoalsActivity"
             android:exported="false" />
         <activity
             android:name=".GoalsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProgressReport"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
