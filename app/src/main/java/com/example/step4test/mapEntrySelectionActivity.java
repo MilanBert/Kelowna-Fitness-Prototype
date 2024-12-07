@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,9 +36,11 @@ public class mapEntrySelectionActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EditText input = findViewById(R.id.editTextText);
+                String location = input.getText().toString();
                 Intent intent = new Intent(mapEntrySelectionActivity.this, mapFragActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("location", true);
+                bundle.putString("location", location);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -48,7 +51,7 @@ public class mapEntrySelectionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(mapEntrySelectionActivity.this, mapFragActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("location", false);
+                bundle.putString("location", "useLocation");
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
