@@ -1,9 +1,12 @@
 package com.example.step4test;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,25 @@ public class AddFood extends AppCompatActivity {
         TextView countButton = findViewById(R.id.count);
         EditText foodInput = findViewById(R.id.food_input);
         TextView calDisplay = findViewById(R.id.calDisplay);
+
+        ImageButton help = findViewById(R.id.food_help);
+
+        // Set onClickListener for the help button
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Build and show an AlertDialog with instructions
+                new AlertDialog.Builder(AddFood.this)
+                        .setTitle("How to Log Food")
+                        .setMessage("To log food:\n" +
+                                "1. Enter the name of the food and press Enter.\n" +
+                                "2. Select the quantity.\n" +
+                                "3. Press 'Log Food' to save.")
+                        .setPositiveButton("Got it", null) // Dismiss the dialog
+                        .show();
+            }
+        });
+
 
         // Populate the table of common foods
         populateFoodTable();
